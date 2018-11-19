@@ -2,30 +2,30 @@ package cards;
 
 import java.util.Scanner;
 
-class Snap {
+class SnapNormalDeck {
 
     // need to make this work with values instead of animals
     private int player1Score;
     private int player2Score;
-    private AnimalDeck deck;
+    private CardDeck deck;
 
-    Snap(AnimalDeck deck) {
+    SnapNormalDeck(CardDeck deck) {
         this.deck = deck;
         deck.shuffle();
     }
 
     public static void main(String[] args) {
-        Snap snap = new Snap(new AnimalDeck());
+        SnapNormalDeck snap = new SnapNormalDeck(new CardDeck());
         snap.play();
     }
 
     void play() {
         Scanner scanner = new Scanner(System.in);
 
-        AnimalCard previousCard = null;
+        Card previousCard = null;
         while (deck.getCards().length > 0) {
-            AnimalCard currentCard = deck.deal();
-            System.out.println(currentCard);
+            Card currentCard = deck.deal();
+            System.out.println(currentCard.getFacevalue());
             String input = scanner.nextLine();
             if (input.length() > 0 && input.charAt(0) == 'a') {
                 if (currentCard.snap(previousCard)) {
@@ -47,6 +47,11 @@ class Snap {
             previousCard = currentCard;
         }
 
+        scoring(player1Score, player2Score);
+    }
+
+
+    public void scoring(int player1Score, int player2Score) {
         if (player1Score == player2Score) {
             System.out.println("Draw.");
         } else if (player1Score > player2Score) {
@@ -56,3 +61,4 @@ class Snap {
         System.out.println("Scores: " + player1Score + " vs " + player2Score);
     }
 }
+
